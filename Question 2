@@ -1,0 +1,55 @@
+using System;
+using System.Data;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+        }
+
+        public static class DataRepository
+        {
+            public static DataTable dt = new DataTable();
+            public static DataRow GetUserById(int userId)
+            {
+                return (dt.Select("UserId == " + userId))[0];
+            }
+        }
+
+        public User GetUserFromDB(int userId)
+        {
+
+            User user = new User();
+            user.UserId = userId;
+            DataRow dr = DataRepository.GetUserById(userId);
+
+            for (int i = 0; i < DataRepository.dt.Columns.Count; i++)
+            {
+                string columnName = DataRepository.dt.Columns[i].ColumnName;
+                if (dr[columnName] != DBNull.Value && dr[columnName] != null)
+                {
+                    string value = dr[columnName].ToString();
+                    user.GetType().GetProperty(columnName).SetValue(user, value);
+                }
+            }
+
+            return user;
+        }
+
+    }
+
+    public class User
+    {
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string CityName { get; set; }
+        public string CountryName { get; set; }
+        public string Email { get; set; }
+    }
+
+}
