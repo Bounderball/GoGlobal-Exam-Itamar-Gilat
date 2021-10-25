@@ -1,0 +1,3 @@
+select ac.bank_id, ac.branch_id, ac.account_num, ac.currency, am.amount
+from accounts ac join amounts am
+on am.account_rec = concat(ac.bank_id,' ',ac.branch_id,' ',ac.account_num)
