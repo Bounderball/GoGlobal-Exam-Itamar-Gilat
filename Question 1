@@ -1,0 +1,47 @@
+// In lines 24-26, the name of the variable "enforced option" was mistakenly used instead of the enum's name "RoomAvailableOption".
+// Moreover, the actual code for the class Room and the method CheckIfRoomAvailable were missing, so I've added those in the simplest form possible for integrity.
+
+public enum RoomAvailableOption
+    {
+        All,
+        AvailableOnly,
+        NotAvailableOnly
+    }
+    public class RoomSearchFilter
+    {
+        RoomAvailableOption enforcedOption;
+        public RoomSearchFilter(RoomAvailableOption enforcedOption)
+        {
+            this.enforcedOption = enforcedOption;
+        }
+
+        public bool IncludeInFinalResults(Room room)
+        {
+            bool isAvailable = CheckIfRoomAvailable(room);
+
+            switch (enforcedOption)
+            {
+                case RoomAvailableOption.All: return true;
+                case RoomAvailableOption.AvailableOnly: return isAvailable;
+                case RoomAvailableOption.NotAvailableOnly: return !isAvailable;
+                default: return true;
+            }
+        }
+    public bool CheckIfRoomAvailable(Room room)
+    {
+        return room.IsAvailable;
+    }
+
+    }
+
+
+    public class Room {
+
+        public bool IsAvailable { get; set; }
+
+        public Room(Boolean isAvailable)
+        {
+            IsAvailable = isAvailable;
+        }
+
+    }
