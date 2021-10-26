@@ -1,0 +1,3 @@
+To open angular project,
+start new angular project
+and replace "src" folder with the one from src.rar in github
